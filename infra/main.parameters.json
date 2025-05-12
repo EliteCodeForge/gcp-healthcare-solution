@@ -1,0 +1,86 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "${AZURE_ENV_NAME}"
+    },
+    "location": {
+      "value": "${AZURE_LOCATION}"
+    },
+    "aiServicesName": {
+      "value": "${AZURE_AISERVICES_NAME}"
+    },
+    "aiHubName": {
+      "value": "${AZURE_AIHUB_NAME}"
+    },
+    "storageName": {
+      "value": "${AZURE_STORAGE_NAME}"
+    },
+    "keyVaultName": {
+      "value": "${AZURE_KEYVAULT_NAME}"
+    },
+    "msiName": {
+      "value": "${AZURE_MSI_NAME}"
+    },
+    "appPlanName": {
+      "value": "${AZURE_APPPLAN_NAME}"
+    },
+    "appName": {
+      "value": "${AZURE_APP_NAME}"
+    },
+    "myPrincipalType": {
+      "value": "${AZURE_PRINCIPAL_TYPE}"
+    },
+    "myPrincipalId": {
+      "value": "${AZURE_PRINCIPAL_ID}"
+    },
+    "gptDeploymentLocation": {
+      "value": "${AZURE_GPT_LOCATION}"
+    },
+    "hlsDeploymentLocation": {
+      "value": "${AZURE_HLS_LOCATION}"
+    },
+    "instanceType": {
+      "value": "${GPU_INSTANCE_TYPE}"
+    },
+    "appServiceLocation": {
+      "value": "${AZURE_APPSERVICE_LOCATION}"
+    },
+    "keyVaultLocation": {
+      "value": "${AZURE_KEYVAULT_LOCATION}"
+    },
+    "healthcareAgentServiceLocation": {
+      "value": "${HEALTHCARE_AGENT_SERVICE_LOCATION}"
+    },
+    "msiLocation": {
+      "value": "${AZURE_MSI_LOCATION}"
+    },
+    "aiEndpointReasoningOverride": {
+      "value": "${AI_ENDPOINT_REASONING_OVERRIDE}"
+    },
+    "azureOpenaiDeploymentNameReasoningModelOverride": {
+      "value": "${AZURE_OPENAI_DEPLOYMENT_NAME_REASONING_MODEL_OVERRIDE}"
+    },
+    "appStorageName": {
+      "value": "${APP_STORAGE_NAME}"
+    },
+    "authClientId": {
+      "value": "${CLIENT_ID}"
+    },
+    "graphRagSubscriptionKey": {
+      "value": "${GRAPH_RAG_SUBSCRIPTION_KEY}"
+    },
+    "scenario": {
+      "value": "${SCENARIO}"
+    },
+    "tags": {
+      "value": {
+        "Owner": "AI Team",
+        "Project": "healthcare-multi-agent-orchestrator",
+        "Environment": "Dev",
+        "Toolkit": "Bicep"
+      }
+    }
+  }
+}

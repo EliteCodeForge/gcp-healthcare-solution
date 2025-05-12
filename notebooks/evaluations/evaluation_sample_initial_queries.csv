@@ -1,0 +1,3 @@
+"Patient ID","Initial Query","Possible Follow up"
+"patient_4","Based on the full clinical picture of patient_4 - including stage, biomarkers, treatment response, and recent imaging - generate a comprehensive patient timeline.",""
+"patient_4","Retrieve the list of all clinical trials this patient is eligible for.","Which clinical trials are recruiting patients in California?"

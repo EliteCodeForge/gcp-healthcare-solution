@@ -1,0 +1,84 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.19/MicrosoftTeams.schema.json",
+    "version": "1.0.0",
+    "manifestVersion": "1.19",
+    "id": "",
+    "name": {
+        "short": "",
+        "full": ""
+    },
+    "developer": {
+        "name": "Microsoft",
+        "mpnId": "",
+        "websiteUrl": "https://microsoft.comg",
+        "privacyUrl": "https://microsoft.com",
+        "termsOfUseUrl": "https://microsoft.com"
+    },
+    "description": {
+        "short": "",
+        "full": ""
+    },
+    "icons": {
+        "outline": "outline.png",
+        "color": "color.png"
+    },
+    "accentColor": "#FFFFFF",
+    "staticTabs": [
+        {
+            "entityId": "conversations",
+            "scopes": [
+                "personal"
+            ]
+        },
+        {
+            "entityId": "about",
+            "scopes": [
+                "personal"
+            ]
+        }
+    ],
+    "bots": [
+        {
+            "botId": "",
+            "scopes": [
+                "personal",
+                "groupChat",
+                "team"
+            ],
+            "isNotificationOnly": false,
+            "supportsCalling": false,
+            "supportsVideo": false,
+            "supportsFiles": true
+        }
+    ],
+    "validDomains": [
+        "microsoft.com"
+    ],
+    "defaultGroupCapability": {
+        "team": "tab",
+        "groupchat": "tab",
+        "meetings": "bot"
+    },
+    "authorization": {
+        "permissions": {
+            "resourceSpecific": [
+                {
+                    "name": "ChatMessage.Send.Chat",
+                    "type": "Application"
+                },
+                {
+                    "name": "ChatMessage.Read.Chat",
+                    "type": "Application"
+                }
+            ]
+        }
+    },
+    "activities": {
+        "activityTypes": []
+    },
+    "supportedChannelTypes": [
+        "privateChannels",
+        "sharedChannels"
+    ],
+    "configurableTabs": []
+}

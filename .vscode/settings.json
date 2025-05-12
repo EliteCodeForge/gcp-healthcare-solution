@@ -1,0 +1,22 @@
+{
+    "[python]": {
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit",
+          "source.unusedImports": "explicit",
+        },
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnSave": true
+    },
+    "autopep8.args": [
+        "--max-line-length", "120"
+    ],
+    "isort.args": [
+        "--line-width", "120"
+    ],
+    "python.analysis.extraPaths": [
+        "./src"
+    ],
+    "files.exclude": {
+        "src/config/*": true
+    }
+}

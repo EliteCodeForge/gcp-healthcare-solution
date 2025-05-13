@@ -52,20 +52,27 @@ The second request will result in a more comprehensive plan and a more detailed 
 
 ## Configuring Research Agent
 
-To use the research agent, configure the endpoint and API key.
-The GraphRAG endpoint and index are located under `scenarios/default/config/agents.yaml`:
-```
-graph_rag_url: "https://graphrag.azure-api.net/"
-graph_rag_index_name: "wiki-articles-demo-index"
-```
+The research agent leverages [GraphRAG](https://github.com/microsoft/graphrag), a modular graph-based Retrieval-Augmented Generation (RAG) system developed by Microsoft Research. To use the research agent effectively, deploy and index your own instance of GraphRAG. The [graphrag-accelerator](https://github.com/azure-samples/graphrag-accelerator) simplifies this setup process.
 
-Once you have obtained the API key, configure it in your environment using:
-```
-azd env set-secret GRAPH_RAG_SUBSCRIPTION_KEY
-```
-Follow the Azure CLI instructions to create a new secret as appropriate.
+### Configuration Steps
 
-## Technical Limitations
+1. **Update Configuration File**  
+  Specify the GraphRAG endpoint and index details in the `scenarios/default/config/agents.yaml` file:
+  ```yaml
+  graph_rag_url: "https://graphrag.azure-api.net/"
+  graph_rag_index_name: "wiki-articles-demo-index"
+  ```
+
+2. **Set API Key Securely**  
+  Use the Azure Developer CLI to securely store the API key:
+  ```bash
+  azd env set-secret GRAPH_RAG_SUBSCRIPTION_KEY
+  ```
+  Refer to the [Azure Developer CLI documentation](https://learn.microsoft.com/azure/developer/azure-developer-cli/) for detailed instructions on managing secrets.
+
+### Technical Limitations
+
+The research agent's performance depends on the quality of the indexed data and the configuration of the GraphRAG system. Ensure proper indexing and validation to achieve optimal results.
 
 The Healthcare Multi-Agent Orchestration framework is not intended for direct clinical use, including diagnosis, treatment, or disease prevention. It should not replace professional medical advice or judgment. Clinical performance depends on several factors as noted below.
 

@@ -1,7 +1,7 @@
-# Healthcare Multi-Agent Orchestrator FAQ
+# Healthcare Agent Orchestrator FAQ
 
-## Q: What is the Healthcare Multi-Agent Orchestrator?
-A: The Healthcare Multi-Agent Orchestrator is a multi-agent accelerator that coordinates specialized agents to assist with healthcare workflows, particularly cancer care. It leverages AI agents with different capabilities (PatientHistory, Radiology, ClinicalTrials, etc.) to analyze patient data and provide relevant information through Microsoft Teams.
+## Q: What is the Healthcare Agent Orchestrator?
+A: The Healthcare Agent Orchestrator is a multi-agent accelerator that coordinates specialized agents to assist with healthcare workflows, particularly cancer care. It leverages AI agents with different capabilities (PatientHistory, Radiology, ClinicalTrials, etc.) to analyze patient data and provide relevant information through Microsoft Teams.
 
 ## Q: How do I start a conversation with the agents?
 A: In Microsoft Teams, you can start a conversation by mentioning an agent's name followed by your question. For example:

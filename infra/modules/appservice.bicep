@@ -46,7 +46,7 @@ resource aiProject 'Microsoft.MachineLearningServices/workspaces@2024-04-01-prev
 resource backend 'Microsoft.Web/sites@2023-12-01' = {
   name: appServiceName
   location: location
-  tags: union(tags, { 'azd-service-name': 'healthcare-multi-agent-orchestrator-app' })
+  tags: union(tags, { 'azd-service-name': 'healthcare-agent-orchestrator-app' })
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: toObject(msis, entry => entry.msiID, entry => {})

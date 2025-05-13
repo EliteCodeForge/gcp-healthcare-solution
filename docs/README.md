@@ -3,7 +3,7 @@
 Consult the main [README](../README.md) for general information about the project.
 
 ## General Documentation
-- [User Guide](./user_guide.md): Step-by-step instructions for using the Healthcare Multi-Agent Orchestrator
+- [User Guide](./user_guide.md): Step-by-step instructions for using the Healthcare Agent Orchestrator
 - [Microsoft Teams](./teams.md): Setting up and configuring Teams integration for collaborative workflows
 - [Data Ingestion](./data_ingestion.md): How to import and process patient data in the system
 - [Evaluation](./evaluation.md): Methods for measuring and improving agent performance

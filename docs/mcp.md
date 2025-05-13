@@ -1,4 +1,4 @@
-# How to Use MCP in the Healthcare Multi-Agent Orchestrator  
+# How to Use MCP in the Healthcare Agent Orchestrator  
 
 ## Overview of MCP
 
@@ -25,7 +25,7 @@ azd env get-value BACKEND_APP_HOSTNAME
 ```yaml
 swagger: '2.0'
 info:
-  title: MCP server healthcare multi-agent orchestrator
+  title: MCP server Healthcare Agent Orchestrator
   description: >-
     Can answer any patient or healthcare related questions. To be used liberally
     and return results as is
@@ -39,7 +39,7 @@ produces: []
 paths:
   /orchestrator/:
     post:
-      summary: MCP server healthcare multi-agent orchestrator
+      summary: MCP server Healthcare Agent Orchestrator
       parameters:
         - in: body
           name: queryRequest
@@ -116,7 +116,7 @@ Use the following instructions for your Copilot agent:
 
 Enable [Generative Orchestration](https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-generative-actions) to allow your Copilot to use tools from the MCP server as they are discovered. Consider disabling other knowledge sources to ensure the Copilot relies solely on the healthcare orchestrator, or add reputable sources to complement it.
 
-Under "Tools," select "Add Tool" and choose the MCP connector created earlier. It will appear as `MCP Server Healthcare Multi-Agent Orchestrator` (from the Swagger title).
+Under "Tools," select "Add Tool" and choose the MCP connector created earlier. It will appear as `MCP Server Healthcare Agent Orchestrator` (from the Swagger title).
 
 Test your changes and publish your agent.
 

@@ -77,7 +77,7 @@
     "tags": {
       "value": {
         "Owner": "AI Team",
-        "Project": "healthcare-multi-agent-orchestrator",
+        "Project": "healthcare-agent-orchestrator",
         "Environment": "Dev",
         "Toolkit": "Bicep"
       }

@@ -1,14 +1,14 @@
-# Healthcare Multi-Agent Orchestrator
-Healthcare Multi-Agent Orchestrator is a multi-agent accelerator that coordinates modular specialized agents across diverse data types and tools like M365 and Teams to assist multi-disciplinary healthcare workflows—such as cancer care. 
+# Healthcare Agent Orchestrator
+Healthcare Agent Orchestrator is a multi-agent accelerator that coordinates modular specialized agents across diverse data types and tools like M365 and Teams to assist multi-disciplinary healthcare workflows—such as cancer care. 
 
 This repository contains comprehensive information to help you get started.
 
 > [!IMPORTANT]
-The Healthcare Multi-Agent Orchestrator code sample is intended for research and development use. The Healthcare Multi-Agent Orchestrator code sample is not designed or intended to be deployed in clinical settings as-is nor is it intended for use in the diagnosis or treatment of any health or medical condition, and its performance for such purposes has not been established. You bear sole responsibility and liability for any use of the Healthcare Multi-Agent Orchestrator code sample, including verification of outputs and incorporation into any product or service intended for a medical purpose or to inform clinical decision-making, compliance with applicable healthcare laws and regulations, and obtaining any necessary clearances or approvals.
+The Healthcare Agent Orchestrator code sample is intended for research and development use. The Healthcare Agent Orchestrator code sample is not designed or intended to be deployed in clinical settings as-is nor is it intended for use in the diagnosis or treatment of any health or medical condition, and its performance for such purposes has not been established. You bear sole responsibility and liability for any use of the Healthcare Agent Orchestrator code sample, including verification of outputs and incorporation into any product or service intended for a medical purpose or to inform clinical decision-making, compliance with applicable healthcare laws and regulations, and obtaining any necessary clearances or approvals.
 
 ## Features
 
-- Demonstrates the use of the Healthcare Multi-Agent Orchestrator for solving complex tasks.
+- Demonstrates the use of the Healthcare Agent Orchestrator for solving complex tasks.
 - Facilitates modular and scalable agent-based solutions for diverse healthcare needs.
 - Provides tools for creating and managing specialized agents for specific tasks.
 - Showcases the application of multi-model AI in healthcare scenarios.
@@ -120,7 +120,7 @@ azd env set GPU_INSTANCE_TYPE Standard_NC40ads_H100_v5
 
 ### Step 3: Deploy the Infrastructure
 
-Now that your environment is set up, you can deploy all the necessary resources and infrastructure for the Healthcare Multi-Agent Orchestrator. 
+Now that your environment is set up, you can deploy all the necessary resources and infrastructure for the Healthcare Agent Orchestrator. 
 
 > [!IMPORTANT]
 > Deploying the infrastructure will create Azure resources in your subscription and may incur costs.

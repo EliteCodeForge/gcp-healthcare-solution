@@ -1,6 +1,6 @@
-name: healthcare-multi-agent-orchestrator
+name: healthcare-agent-orchestrator
 services:
-  healthcare-multi-agent-orchestrator-app:
+  healthcare-agent-orchestrator-app:
     project: src
     host: appservice
     language: python

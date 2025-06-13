@@ -22,6 +22,17 @@ Healthcare Agent Orchestrator is a code sample to help you build an agent inte
 
 For each agent defined in `agents.yaml`, an Azure bot and associated Teams app are created. These are integrated into Semantic Kernel's group chat feature, allowing a group of experts to collaboratively solve tasks. Each agent has access to a set of tools. New agents can be added by updating `agents.yaml` and redeploying the application.
 
+## AI Agent Role Summaries
+
+- Orchestrator: Facilitates the conversation between the user and all expert agents. Determines the order of responses, gathers required information, and ensures agents yield control back after completing their tasks.
+- Patient History: Loads and presents the patient's full clinical timeline using structured data tools. Answers questions about medical history but does not interpret images or make clinical recommendations.
+- Radiology: Analyzes chest x-ray images using the CXRReportGen model and compares findings to the patient's history. Does not support other imaging modalities like CT or pathology.
+- Patient Status: Provides a structured summary of the patient’s current clinical status including stage, biomarkers, and performance score. Requests missing details from PatientHistory if needed.
+- Clinical Guidelines: Generates a structured treatment plan based on patient status using clinical guidelines and biomarker rationale. Recommends therapy adjustments and progression contingencies.
+- Report Creation: Compiles a comprehensive tumor board Word document using all previously gathered information. Does not summarize or interpret; simply assembles validated agent outputs.
+- Clinical Trials: Searches for and presents relevant clinical trials based on patient characteristics and prior treatments. Filters only for trials the patient is eligible for and formats them clearly.
+- Medical Research: Retrieves research-backed insights using Microsoft GraphRAG. Responses include unaltered source references and links, focusing strictly on verified data.
+
 ## Getting Started
 
 To get started with using our code sample for multi-agent workflows, follow the instructions below to set up your environment and run the sample application.

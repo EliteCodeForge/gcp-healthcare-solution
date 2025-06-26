@@ -19,10 +19,10 @@ This module serves as a practical starting point for developers who want to inte
 ### Authenticating to the FHIR service
 
 The sample code in this guide demonstrates how to deploy an instance of the AHDS FHIR service and connect to it securely. The FHIR service supports OAuth2 for authentication, ensuring authorized access to healthcare data. The sample code provides two methods for authenticating with the FHIR service:  
-   
+
 - **Managed Identity Authentication**: Use Azure managed identities to access the FHIR service without managing credentials. This is the authentication method configured by default.
 - **Client Secret Authentication**: Connect to the FHIR service using a client ID and client secret from a registered Azure Active Directory application.  
-   
+
 If you would like to change the authentication method in use or implement your own, review the code in [FhirClinicalNoteAccessor](../src/data_models/fhir/fhir_clinical_note_accessor.py) and you will see two static factory functions that return an instance of the **FhirClinicalNoteAccessor** class with the authentication method configured. To change which authentication method is used, you can edit [DataAccess](../src/data_models/data_access.py) and modify the [`create_data_access()`](https://github.com/Azure-Samples/healthcare-agent-orchestrator/blob/ece9cb9bfb45ec88db9559bc9280f27ada054d17/src/data_models/data_access.py#L92) function accordingly. For example, to change the authentication to use a client secret, you would change the instansiation of **FhirClinicalNoteAccessor** from using [`FhirClinicalNoteAccessor.from_credential()`](https://github.com/Azure-Samples/healthcare-agent-orchestrator/blob/ece9cb9bfb45ec88db9559bc9280f27ada054d17/src/data_models/fhir/fhir_clinical_note_accessor.py#L21) to use the [`FhirClinicalNoteAccessor.from_client_secret()`](https://github.com/Azure-Samples/healthcare-agent-orchestrator/blob/ece9cb9bfb45ec88db9559bc9280f27ada054d17/src/data_models/fhir/fhir_clinical_note_accessor.py#L27) factory function as follows:
 ```python
 ...
@@ -47,10 +47,8 @@ You can also modify this example to connect to your own instance of a FHIR servi
 ```powershell
 # Update CLINICAL_NOTES_SOURCE to FHIR
 azd env set CLINICAL_NOTES_SOURCE fhir
-
 # Update FHIR URL
 azd env set FHIR_SERVICE_ENDPOINT "https://<insert-your-fhir-endpoint-here>"
-
 # Start deployment
 azd up
 ```

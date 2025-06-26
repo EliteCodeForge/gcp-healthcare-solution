@@ -100,7 +100,7 @@ If you've identified single region for deployment, you can proceed to authentica
 | AZURE_GPT_LOCATION | Region for GPT resources | Defaults to `AZURE_LOCATION` |
 | AZURE_APPSERVICE_LOCATION | Region for App Service deployment | Defaults to `AZURE_LOCATION` |
 | GPU_INSTANCE_TYPE | GPU SKU for model deployment | Defaults to `Standard_NC24ads_A100_v4` |
-| CLINICAL_NOTES_SOURCE | Source of clinical notes used by agents. Accepted values: `blob`, `fhir`. | Defaults to `blob` |
+| CLINICAL_NOTES_SOURCE | Source of clinical notes used by agents. Accepted values: `blob`, `fhir`, `fabric`. | Defaults to `blob` |
 
 
 First, authenticate with Azure services:
@@ -128,7 +128,7 @@ azd env set AZURE_APPSERVICE_LOCATION <region>
 azd env set GPU_INSTANCE_TYPE Standard_NC40ads_H100_v5
 ```
 
-[OPTIONAL] Configure agents to retrieve clinical notes from an EHR via FHIR. See more information in [FHIR Integration](./docs/fhir_integration.md).
+[OPTIONAL] Agents can be configured to have a different data access layer. This repo provides two alternatives for retrieving clinical notes using the Fast Healthcare Interopability Resource (FHIR) standard. The first option leverages the FHIR server from Azure Health Data Services (AHDS), more information can be found [here](./docs/fhir_integration.md). The second alternative uses a relational FHIR server as part of healthcare data solutions (HDS) in Microsoft Fabric, more information can be found [here](./docs/fabric/fabric_integration.md).
 
 ```sh
 azd env set CLINICAL_NOTES_SOURCE fhir

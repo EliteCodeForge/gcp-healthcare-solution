@@ -50,6 +50,11 @@
     "hlsDeploymentLocation": {
       "value": "${AZURE_HLS_LOCATION}"
     },
+    "hlsModelEndpoints": {
+      "value": {
+        "cxr_report_gen": "${CXR_REPORT_GEN_ENDPOINT}"
+      }
+    },
     "instanceType": {
       "value": "${GPU_INSTANCE_TYPE}"
     },

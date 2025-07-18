@@ -5,19 +5,21 @@ import asyncio
 import logging
 import os
 
-from botbuilder.core import ActivityHandler, MessageFactory, TurnContext
+from botbuilder.core import MessageFactory, TurnContext
+from botbuilder.core.teams import TeamsActivityHandler
 from botbuilder.integration.aiohttp import CloudAdapter
 from botbuilder.schema import Activity, ActivityTypes
 from semantic_kernel.agents import AgentGroupChat
 
 from data_models.app_context import AppContext
 from data_models.chat_context import ChatContext
+from errors import NotAuthorizedError
 from group_chat import create_group_chat
 
 logger = logging.getLogger(__name__)
 
 
-class AssistantBot(ActivityHandler):
+class AssistantBot(TeamsActivityHandler):
     def __init__(
         self,
         agent: dict,
@@ -143,6 +145,9 @@ class AssistantBot(ActivityHandler):
         # This error is raised as Exception, so we can only use the message to handle the error.
         if str(error) == "Unable to proceed while another agent is active.":
             await context.send_activity("Please wait for the current agent to finish.")
+        elif isinstance(error, NotAuthorizedError):
+            logger.warning(error)
+            await context.send_activity("You are not authorized to access this agent.")
         else:
             # default exception handling
             logger.exception(f"Agent {self.name} encountered an error")

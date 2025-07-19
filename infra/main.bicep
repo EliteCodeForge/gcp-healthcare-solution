@@ -92,6 +92,9 @@ param fhirServiceEndpoint string = ''
 @description('The Microsoft Fabric User Data Function Endpoint.')
 param fabricUserDataFunctionEndpoint string = ''
 
+@description('Name of the Application Insights instance. Automatically generated if left blank')
+param appInsightsName string = ''
+
 var modelName = split(model, ';')[0]
 var modelVersion = split(model, ';')[1]
 
@@ -177,6 +180,7 @@ var names = {
   storage: !empty(storageName) ? storageName : replace(replace('${abbrs.storageStorageAccounts}${environmentName}${uniqueSuffix}', '-', ''), '_', '')
   appStorage: !empty(appStorageName) ? appStorageName : replace(replace('${abbrs.storageStorageAccounts}app${environmentName}${uniqueSuffix}', '-', ''), '_', '')
   keyVault: !empty(keyVaultName) ? keyVaultName : '${abbrs.keyVaultVaults}${environmentName}-${uniqueSuffix}'
+  appInsights: !empty(appInsightsName) ? appInsightsName : '${abbrs.insightsComponents}${environmentName}-${uniqueSuffix}'
   ahdsWorkspaceName: replace('ahds${environmentName}${uniqueSuffix}', '-', '')
   ahdsFhirServiceName: replace('fhir${environmentName}${uniqueSuffix}', '-', '')
   vnet: !empty(vnetName) ? vnetName : '${abbrs.networkVirtualNetworks}${environmentName}-${uniqueSuffix}'
@@ -333,7 +337,6 @@ module m_appStorageAccount 'modules/storageAccount.bicep' = {
     tags: tags
   }
 }
-
 var shouldDeployFhirService = clinicalNotesSource == 'fhir' && empty(fhirServiceEndpoint)
 
 module m_fhirService 'modules/fhirService.bicep' = if (shouldDeployFhirService) {
@@ -385,6 +388,9 @@ module m_app 'modules/appservice.bicep' = {
     graphRagSubscriptionKey: graphRagSubscriptionKey
     keyVaultName: m_keyVault.outputs.keyVaultName
     scenario: scenario
+    // Pass Application Insights connection string as environment variable
+    applicationInsightsConnectionString: m_appInsights.outputs.connectionString
+    
     clinicalNotesSource: clinicalNotesSource
     fhirServiceEndpoint: fhirServiceEndpoint
     fabricUserDataFunctionEndpoint: fabricUserDataFunctionEndpoint
@@ -423,6 +429,22 @@ module m_healthcareAgentService 'modules/healthcareAgentService.bicep' = if (!em
       }
     ]
     keyVaultName: m_keyVault.outputs.keyVaultName
+  }
+}
+
+// Deploy Application Insights
+module m_appInsights 'modules/appinsights.bicep' = {
+  name: 'deploy_app_insights'
+  params: {
+    appInsightsName: names.appInsights
+    location: location
+    tags: tags
+    grantAccessTo: [
+      for i in range(0, length(agents)): {
+        id: m_msi[i].outputs.msiPrincipalID
+        type: 'ServicePrincipal'
+      }
+    ]
   }
 }
 

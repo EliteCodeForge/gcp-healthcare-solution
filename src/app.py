@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 import os
-
+import logging
 from azure.identity import AzureCliCredential, ManagedIdentityCredential
 from azure.storage.blob.aio import BlobServiceClient
 from botbuilder.integration.aiohttp import CloudAdapter, ConfigurationBotFrameworkAuthentication
@@ -16,7 +16,7 @@ from starlette.routing import Mount
 from bots import AssistantBot, MagenticBot
 from bots.access_control_middleware import AccessControlMiddleware
 from bots.show_typing_middleware import ShowTypingMiddleware
-from config import DefaultConfig, load_agent_config, setup_logging
+from config import DefaultConfig, load_agent_config, setup_logging, setup_app_insights_logging
 from data_models.app_context import AppContext
 from data_models.data_access import create_data_access
 from mcp_app import create_fast_mcp_app
@@ -29,8 +29,9 @@ from routes.views.patient_timeline_routes import patient_timeline_entry_source_r
 
 load_dotenv(".env")
 
-setup_logging()
-
+# Setup default logging and minimum log level severity for your environment that you want to consume
+log_level = logging.INFO
+setup_logging(log_level=log_level)
 
 def create_app_context():
     '''Create the application context for commonly used object used in application.'''
@@ -101,6 +102,10 @@ def create_app(
 
 
 app_context = create_app_context()
+
+# Setup Application Insights logging
+setup_app_insights_logging(credential=app_context.credential,
+                           log_level=log_level)
 
 # Create Teams specific objects
 adapters = {

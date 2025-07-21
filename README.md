@@ -229,6 +229,8 @@ As part of the deployment, a simple chat UI was also deployed. You can access it
 > azd env set ADDITIONAL_ALLOWED_IPS "your.ip.address/32"
 > azd up
 > ```
+> **Important**: You need to add your own IP address if you want to access grounded links and generated Word documents from the healthcare agents.
+> 
 > For more information on network security configuration, see the [Network Architecture](./docs/network.md) documentation.
 
 ### [Optional] Uninstall / Clean-up

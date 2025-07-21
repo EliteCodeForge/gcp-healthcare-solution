@@ -50,7 +50,7 @@ azd up
 
 ### Network Configuration Parameters
 
-The network architecture is fully parameterized and can be customized during deployment. Organizations can modify the following parameters in `main.parameters.json` or during `azd provision`:
+The network architecture is fully parameterized and can be customized during deployment. Organizations can modify the following parameters in `main.parameters.json` or set the corresponding environment variables before running `azd up`:
 
 **VNet Configuration**:
 - `vnetName`: Custom name for the virtual network (auto-generated if not specified)
@@ -62,24 +62,47 @@ The network architecture is fully parameterized and can be customized during dep
   - `name`: Subnet name (default: `"appservice-subnet"`)
   - `addressPrefix`: Subnet address range (default: `"10.0.1.0/24"`)
   - `delegation`: Service delegation (default: `"Microsoft.Web/serverFarms"`)
-  - `serviceEndpoints`: Array of service endpoints (default: `["Microsoft.KeyVault", "Microsoft.Storage", "Microsoft.Web"]`)
+  - `serviceEndpoints`: Array of service endpoint objects with `service` and `locations` properties
   - `securityRules`: Custom NSG rules for the subnet
 
-**Example Parameter Override**:
+**Environment Variables**: Set `AZURE_VNET_NAME`, `VNET_ADDRESS_PREFIXES`, and `APPSERVICE_SUBNET_PREFIX` to customize network configuration.
+
+**Example Parameter Override for main.parameters.json**:
 ```json
-{
-  "vnetAddressPrefixes": ["172.16.0.0/16"],
-  "subnets": [
+"vnetName": {
+  "value": "${AZURE_VNET_NAME}"
+},
+"vnetAddressPrefixes": {
+  "value": ["${VNET_ADDRESS_PREFIXES}"]
+},
+"subnets": {
+  "value": [
     {
       "name": "appservice-subnet",
-      "addressPrefix": "172.16.1.0/24",
+      "addressPrefix": "${APPSERVICE_SUBNET_PREFIX}",
       "delegation": "Microsoft.Web/serverFarms",
-      "serviceEndpoints": ["Microsoft.KeyVault", "Microsoft.Storage", "Microsoft.Web"],
+      "serviceEndpoints": [
+        {
+          "service": "Microsoft.Web",
+          "locations": ["*"]
+        },
+        {
+          "service": "Microsoft.KeyVault",
+          "locations": ["*"]
+        },
+        {
+          "service": "Microsoft.Storage",
+          "locations": ["*"]
+        }
+      ],
       "securityRules": []
     }
   ]
 }
 ```
+
+> [!NOTE]
+> Copy and paste the above JSON directly into your `main.parameters.json` file to enable network customization via environment variables.
 
 > [!TIP]
 > Organizations should choose non-overlapping address spaces that align with their existing network infrastructure. The default `10.0.0.0/16` range can be modified to avoid conflicts with on-premises networks or other Azure VNets.

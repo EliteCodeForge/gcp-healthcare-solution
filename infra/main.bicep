@@ -107,13 +107,28 @@ var location = resourceGroup().location
 param vnetName string = ''
 @description('Virtual network address prefixes')
 param vnetAddressPrefixes array = ['10.0.0.0/16']
+@description('Location for service endpoints')
+param serviceEndpointLocation string = '*'
 @description('Subnet configurations for the virtual network')
 param subnets array = [
   {
     name: 'appservice-subnet'
     addressPrefix: '10.0.1.0/24'
     delegation: 'Microsoft.Web/serverFarms'
-    serviceEndpoints: ['Microsoft.KeyVault', 'Microsoft.Storage', 'Microsoft.Web']
+    serviceEndpoints: [                                                            
+      {
+        service: 'Microsoft.Web'
+        locations: [serviceEndpointLocation]
+      }
+      {
+        service: 'Microsoft.KeyVault'
+        locations: [serviceEndpointLocation]
+      }
+      {
+        service: 'Microsoft.Storage'
+        locations: [serviceEndpointLocation]
+      }
+    ]
     securityRules: [
       {
         name: 'AllowHTTPSInbound'

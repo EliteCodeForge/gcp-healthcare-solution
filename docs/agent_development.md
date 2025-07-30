@@ -88,6 +88,7 @@ During runtime, the framework automatically discovers any plugin that exposes a 
 1. Create either:
   - Single file: `src/<SCENARIO>/tools/my_new_tool_plugin.py` with `create_plugin()` function
   - Package: `src/<SCENARIO>/tools/my_new_tool_plugin/__init__.py` with `create_plugin()` function + other files
+  - OpenAPI: an OpenAPI specification. See PatientStatus definition in `src/default/config/agents.yaml` and OpenAPI specification `src/default/config/openapi/time_api.yaml` as an example for adding OpenAPI service as tools.
 
 The factory function must return your tool instance. The framework will automatically discover and load properly structured tools referenced in agent configs.
 
@@ -100,6 +101,9 @@ The factory function must return your tool instance. The framework will automati
      # …other agent fields…
      tools:
        - name: <plugin_package>
+         type: <function | openapi>
+         openapi_document_path: <path or url (openapi only)>
+         server_url_override: <url (openapi only)>
    ```
 
 ### Optimizing Agent Fields for Tool Integration
@@ -194,6 +198,52 @@ class WeatherPlugin:
   description: |
     Supplies current temperature and conditions. **Requires**: ZIP code.
 ```
+
+### Agent with a OpenAPI Plugin Example
+Agent can be configured to call OpenAPI services as tools. The following configuration demonstrates the PatientStatus agent using an OpenAPI service that returns current time to calculate age. Replace PatientStatus configuration in `src/scenarios/default/config/agents.yaml` with the following configuration to see the OpenAPI plugin in action. Run `azd deploy` to deploy changes.
+
+```yaml
+- name: PatientStatus
+  instructions: |
+    You are an AI agent that provides the patient's current status. Make sure to explicitly mention these characteristics before presenting the patient's current status.
+      'age':
+      'patient_gender':
+      'staging':
+      'primary site':
+      'histology':
+      'biomarkers'
+      'treatment history':
+      'ecog performance status':
+
+    Don't proceed unless you have all of this information. 
+    You may infer this information from the conversation if it is available.
+    If date of birth is available, calculate the age using the `time_plugin`.
+    If this information is not available, ask PatientHistory specifically for the missing information.
+    DO:
+      Ask PatientHistory. EXAMPLE: "*PatientHistory*, can you provide me with the patient's #BLANK?. Try to infer the information if not available".
+  tools:
+    - name: time_plugin
+      type: openapi
+      openapi_document_path: scenarios/default/config/openapi/time_api.yaml
+      server_url_override: http://localhost:8000 # Using localhost since Time API is deployed locally.
+  description: |
+    A PatientStatus agent. You provide current status of a patient using. **You provide**: current status of a patient. **You need**: age, staging, primary site, histology, biomarkers, treatment history, ecog performance status. This can be obtained by PatientHistory.
+```
+
+From Teams, send the following message to the PatientStatus agent.
+
+```
+@PatientStatus what's the age if date of birth is 1965-12-01
+```
+
+PatientStatus should respond with patient's age based on date of birth.
+
+```
+age: 59 years old (calculated from date of birth 1965-12-01)
+...
+```
+
+PatientStatus was able to calculate patient's age using the current time and the date of birth.
 
 ## Next Steps
 

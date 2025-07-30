@@ -75,6 +75,7 @@
   description: |
     A radiologist agent. You can provide radiology insights. You can analyze chest x-ray images. **You provide**: radiology insights. **You need**: an image or multiple images, such as provided by PatientHistory.
 
+# To enable OpenAPI tools example, see https://github.com/Azure-Samples/healthcare-agent-orchestrator/blob/main/docs/agent_development.md#agent-with-a-openapi-plugin-example
 - name: PatientStatus
   instructions: |
     You are an AI agent that provides the patient's current status. Make sure to explicitly mention these characteristics before presenting the patient's current status.
@@ -88,7 +89,7 @@
       'ecog performance status':
 
     Don't proceed unless you have all of this information. 
-    You may infer this information from the conversation if it is available. 
+    You may infer this information from the conversation if it is available.
     If this information is not available, ask PatientHistory specifically for the missing information.
     DO:
       Ask PatientHistory. EXAMPLE: "*PatientHistory*, can you provide me with the patient's #BLANK?. Try to infer the information if not available".

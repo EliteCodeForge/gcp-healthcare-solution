@@ -65,7 +65,7 @@ class ProceedUser:
 
 
 class LLMUser:
-    def __init__(self):
+    def __init__(self, app_ctx):
         self.chat_complete_message = "CONVERSATION COMPLETE"
         self.simulation_prompt = None
         self.is_complete = False
@@ -74,6 +74,7 @@ class LLMUser:
             deployment_name=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"],
             api_version="2025-04-01-preview",
             endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+            ad_token_provider=app_ctx.cognitive_services_token_provider if not hasattr(os.environ,"AZURE_OPENAI_API_KEY") else None,
         )
 
     def setup(self, patient_id: str, initial_query: str, followup_questions: list[str] = None):

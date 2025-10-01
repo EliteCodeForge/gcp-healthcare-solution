@@ -24,6 +24,8 @@ from semantic_kernel.contents.chat_message_content import ChatMessageContent
 from semantic_kernel.contents.history_reducer.chat_history_truncation_reducer import ChatHistoryTruncationReducer
 from semantic_kernel.functions.kernel_function_from_prompt import KernelFunctionFromPrompt
 from semantic_kernel.kernel import Kernel, KernelArguments
+from semantic_kernel.prompt_template.input_variable import InputVariable
+from semantic_kernel.prompt_template.prompt_template_config import PromptTemplateConfig
 
 from data_models.app_context import AppContext
 from data_models.chat_context import ChatContext
@@ -134,6 +136,7 @@ def create_group_chat(
             data_access=app_ctx.data_access,
             chat_ctx=chat_ctx,
             azureml_token_provider=app_ctx.azureml_token_provider,
+            app_ctx=app_ctx,
         )
         is_healthcare_agent = healthcare_agent_config.yaml_key in agent_config and bool(
             agent_config[healthcare_agent_config.yaml_key])
@@ -195,13 +198,15 @@ def create_group_chat(
     else:
         settings = AzureChatPromptExecutionSettings(
             function_choice_behavior=FunctionChoiceBehavior.Auto(), seed=42, response_format=ChatRule)
-    arguments = KernelArguments(settings=settings)
 
     facilitator_agent = next((agent for agent in all_agents_config if agent.get("facilitator")), all_agents_config[0])
     facilitator = facilitator_agent["name"]
-    selection_function = KernelFunctionFromPrompt(
-        function_name="selection",
-        prompt=f"""
+
+    # Create selection function with proper input variable configuration
+    selection_prompt_config = PromptTemplateConfig(
+        name="selection",
+        description="Agent selection prompt",
+        template=f"""
         You are overseeing a group chat between several AI agents and a human user.
         Determine which participant takes the next turn in a conversation based on the most recent participant. Follow these guidelines:
 
@@ -225,12 +230,21 @@ def create_group_chat(
         History:
         {{{{$history}}}}
         """,
+        input_variables=[
+            InputVariable(name="history", allow_dangerously_set_content=True)
+        ]
+    )
+
+    selection_function = KernelFunctionFromPrompt(
+        function_name="selection",
+        prompt_template_config=selection_prompt_config,
         prompt_execution_settings=settings
     )
 
-    termination_function = KernelFunctionFromPrompt(
-        function_name="termination",
-        prompt=f"""
+    termination_prompt_config = PromptTemplateConfig(
+        name="termination",
+        description="Agent termination prompt",
+        template=f"""
         Determine if the conversation should end based on the most recent message.
         You only have access to the last message in the conversation.
 
@@ -258,6 +272,14 @@ def create_group_chat(
         History:
         {{{{$history}}}}
         """,
+        input_variables=[
+            InputVariable(name="history", allow_dangerously_set_content=True)
+        ]
+    )
+
+    termination_function = KernelFunctionFromPrompt(
+        function_name="termination",
+        prompt_template_config=termination_prompt_config,
         prompt_execution_settings=settings
     )
     agents = [_create_agent(agent) for agent in all_agents_config]
@@ -281,7 +303,6 @@ def create_group_chat(
             result_parser=evaluate_selection,
             agent_variable_name="agents",
             history_variable_name="history",
-            arguments=arguments,
         ),
         termination_strategy=KernelFunctionTerminationStrategy(
             agents=[
@@ -297,7 +318,6 @@ def create_group_chat(
             history_reducer=ChatHistoryTruncationReducer(
                 target_count=1, auto_reduce=True
             ),
-            arguments=arguments,
         ),
     )
 
